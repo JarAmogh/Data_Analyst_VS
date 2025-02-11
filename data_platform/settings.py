@@ -50,14 +50,16 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'data_platform.wsgi.application'
 
-# MongoDB Connection using mongoengine
+# ✅ MongoDB Connection using MongoEngine
 mongoengine.connect(
     db="data_platform_db",
     host="127.0.0.1",
     port=27017
 )
 
-# Password Validation (Keep Django authentication settings)
+# ✅ Remove Celery-related settings (if any)
+
+# Password Validation
 AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
     {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
@@ -72,7 +74,7 @@ USE_I18N = True
 USE_L10N = True
 USE_TZ = True
 
-# Static files (CSS, JavaScript, Images)
+# Static files
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR / "static"]
 

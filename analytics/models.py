@@ -1,5 +1,5 @@
-from django.db import models
-from mongoengine import Document, StringField, FloatField, DateTimeField, IntField, BooleanField
+from mongoengine import Document, StringField, FloatField, IntField, DateTimeField, BooleanField
+
 
 class AmazonSaleReport(Document):
     order_id = StringField(required=True, unique=True)
@@ -27,15 +27,6 @@ class AmazonSaleReport(Document):
 
     meta = {'collection': 'amazon_sales'}
 
-class SaleReport(Document):
-    sku_code = StringField(required=True, unique=True)
-    design_no = StringField()
-    stock = IntField()
-    category = StringField()
-    size = StringField()
-    color = StringField()
-
-    meta = {'collection': 'sale_reports'}
 
 class ExpenseReport(Document):
     received_amount = StringField()
@@ -44,6 +35,26 @@ class ExpenseReport(Document):
     expense_value = FloatField()
 
     meta = {'collection': 'expense_reports'}
+
+
+class SalesReport(Document):
+    sku_code = StringField()
+    design_no = StringField()
+    stock = IntField()
+    category = StringField()
+    size = StringField()
+    color = StringField()
+
+    meta = {'collection': 'sales_reports'}
+
+
+class CloudWarehouseComparison(Document):
+    warehouse = StringField()
+    shiprocket = FloatField()
+    increff = FloatField()
+
+    meta = {'collection': 'cloud_warehouse_comparison'}
+
 
 class InternationalSaleReport(Document):
     date = DateTimeField()
@@ -58,27 +69,40 @@ class InternationalSaleReport(Document):
 
     meta = {'collection': 'international_sales'}
 
-class CloudWarehouseComparison(Document):
-    warehouse = StringField()
-    shiprocket = FloatField()
-    increff = FloatField()
+class May2022Report(Document):
+    
+    date = StringField()
+    style = StringField()
+    sku = StringField()
+    size = StringField()
+    rate = FloatField()
+    gross_amt = FloatField()
+    pcs = IntField()
 
-    meta = {'collection': 'cloud_warehouses'}
 
-class MonthlySalesData(Document):
-    date = DateTimeField()
-    order_id = StringField(unique=True)
-    product = StringField()
+    meta = {'collection': 'may_2022_reports'}  #
+
+class PLMarch2021Report(Document):
+    sku = StringField(required=True)
+    style = StringField(required=True)
     category = StringField()
-    quantity = IntField()
-    revenue = FloatField()
+    weight = FloatField()
+    tp1 = FloatField()
+    tp2 = FloatField()
+    mrp_old = FloatField()
+    final_mrp_old = FloatField()
+    ajio_mrp = FloatField()
+    amazon_mrp = FloatField()
+    amazon_fba_mrp = FloatField()
+    flipkart_mrp = FloatField()
+    limeroad_mrp = FloatField()
+    myntra_mrp = FloatField()
+    paytm_mrp = FloatField()
+    snapdeal_mrp = FloatField()
+    pcs = IntField()
+    size = StringField()
+    rate = StringField()
+    gross_amt = FloatField()
 
-    meta = {'collection': 'monthly_sales'}
 
-class ProfitLossReport(Document):
-    date = DateTimeField()
-    revenue = FloatField()
-    expenses = FloatField()
-    profit = FloatField()
-
-    meta = {'collection': 'profit_loss'}
+    
