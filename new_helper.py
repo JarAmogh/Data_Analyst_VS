@@ -8,6 +8,8 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
+import gspread
+from oauth2client.service_account import ServiceAccountCredentials
 
 
 
@@ -538,4 +540,8 @@ plt.pie(status_counts, labels=status_counts.index, autopct='%1.1f%%', colors=['b
 plt.title('Proportion of Shipped, Cancelled, and Returned Orders')
 plt.axis('equal')  
 plt.show()
+
+
+
+
 
