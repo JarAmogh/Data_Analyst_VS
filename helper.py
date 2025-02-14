@@ -1,10 +1,9 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[5]:
+# In[1]:
 
 
-# Importing the necessary libraries
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
@@ -12,7 +11,7 @@ import seaborn as sns
 
 
 
-# In[6]:
+# In[2]:
 
 
 # # Clear all DataFrames by setting them to None
@@ -25,12 +24,9 @@ import seaborn as sns
 # sale_report_df = None
 
 
-# In[7]:
+# In[3]:
 
 
-import pandas as pd
-
-# Specify the data types for columns in Amazon Sale Report
 dtype_spec = {
     'Order ID': 'str',
     'Date': 'str',
@@ -56,37 +52,41 @@ dtype_spec = {
     'fulfilled-by': 'str'
 }
 
-# Reload the CSV files into DataFrames with specified data types
 
-amazon_sale_report_df = pd.read_csv('amazon_sale_report.csv', dtype=dtype_spec, low_memory=False)
-cloud_warehouse_comparison_chart_df = pd.read_csv('cloud_warehouse_comparison_chart.csv')
-expense_iigf_df = pd.read_csv('expense_iigf.csv')
-international_sale_report_df = pd.read_csv('international_sale_report.csv')
-may_2022_df = pd.read_csv('may_2022.csv')
-pl_march_2021_df = pd.read_csv('pl_march_2021.csv')
-sale_report_df = pd.read_csv('sale_report.csv')
 
+_new_amazon_sale_report_df = pd.read_csv('amazon_sale_report.csv', dtype=dtype_spec, low_memory=False)
+_new_cloud_warehouse_comparison_chart_df = pd.read_csv('cloud_warehouse_comparison_chart.csv')
+_new_expense_iigf_df = pd.read_csv('expense_iigf.csv')
+_new_international_sale_report_df = pd.read_csv('international_sale_report.csv')
+_new_may_2022_df = pd.read_csv('may_2022.csv')
+_new_pl_march_2021_df = pd.read_csv('pl_march_2021.csv')
+_new_sale_report_df = pd.read_csv('sale_report.csv')
 
 
 
 # Data Cleaning 
 
-# In[8]:
+# In[4]:
 
 
-amazon_sale_report_df
+_new_amazon_sale_report_df
 
 
-# In[9]:
+# In[5]:
 
 
-print(amazon_sale_report_df.isnull().sum())
+_new_amazon_sale_report_df.isnull().sum()
 
 
-# In[10]:
+# In[6]:
 
 
-# Handle missing values
+_new_sale_report_df.isnull().sum()
+
+
+# In[7]:
+
+
 amazon_sale_report_df['Courier Status'] = amazon_sale_report_df['Courier Status'].fillna('unknown')
 amazon_sale_report_df['currency'] = amazon_sale_report_df['currency'].fillna('unknown')
 amazon_sale_report_df['Amount'] = amazon_sale_report_df['Amount'].fillna(0)
@@ -98,13 +98,13 @@ amazon_sale_report_df['promotion-ids'] = amazon_sale_report_df['promotion-ids'].
 amazon_sale_report_df['fulfilled-by'] = amazon_sale_report_df['fulfilled-by'].fillna('unknown')
 
 
-# In[11]:
+# In[8]:
 
 
 amazon_sale_report_df.drop_duplicates(inplace=True)
 
 
-# In[12]:
+# In[37]:
 
 
 amazon_sale_report_df['Category'] = amazon_sale_report_df['Category'].str.lower().str.strip()
@@ -115,93 +115,87 @@ amazon_sale_report_df['SKU'] = amazon_sale_report_df['SKU'].str.lower().str.stri
 amazon_sale_report_df['Courier Status'] = amazon_sale_report_df['Courier Status'].str.lower().str.strip()
 amazon_sale_report_df['currency'] = amazon_sale_report_df['currency'].str.lower().str.strip()
 
-# Convert 'Date' column to datetime format
+
 amazon_sale_report_df['Date'] = pd.to_datetime(amazon_sale_report_df['Date'], format='%m-%d-%y')
 
-# Create new columns
+
 amazon_sale_report_df['Month'] = amazon_sale_report_df['Date'].dt.month
 amazon_sale_report_df['Weekday'] = amazon_sale_report_df['Date'].dt.weekday
 
 
-# In[13]:
+# In[10]:
 
 
 amazon_sale_report_df.drop(columns=['Unnamed: 22'], inplace=True)
 
 
-# In[14]:
+# In[11]:
 
 
 amazon_sale_report_df
 
 
-# In[15]:
+# In[12]:
 
 
 print(cloud_warehouse_comparison_chart_df.isnull().sum())
 
 
-# In[16]:
+# In[38]:
 
 
-# Convert columns to numeric, forcing non-numeric values to NaN
 cloud_warehouse_comparison_chart_df['Shiprocket'] = pd.to_numeric(cloud_warehouse_comparison_chart_df['Shiprocket'], errors='coerce')
 cloud_warehouse_comparison_chart_df['INCREFF'] = pd.to_numeric(cloud_warehouse_comparison_chart_df['INCREFF'], errors='coerce')
 
-# Handle missing values without using inplace=True
+
 cloud_warehouse_comparison_chart_df['Shiprocket'] = cloud_warehouse_comparison_chart_df['Shiprocket'].fillna(cloud_warehouse_comparison_chart_df['Shiprocket'].mean())
 cloud_warehouse_comparison_chart_df['INCREFF'] = cloud_warehouse_comparison_chart_df['INCREFF'].fillna(cloud_warehouse_comparison_chart_df['INCREFF'].mean())
 
-# Remove duplicate rows
+
 cloud_warehouse_comparison_chart_df.drop_duplicates(inplace=True)
 
-# Drop the 'Unnamed: 1' column
+
 if 'Unnamed: 1' in cloud_warehouse_comparison_chart_df.columns:
     cloud_warehouse_comparison_chart_df.drop(columns=['Unnamed: 1'], inplace=True)
 
 
-# In[17]:
+# In[14]:
 
 
 cloud_warehouse_comparison_chart_df['Shiprocket'] = cloud_warehouse_comparison_chart_df['Shiprocket'].fillna(cloud_warehouse_comparison_chart_df['Shiprocket'].mean())
 
 
-# In[18]:
+# In[19]:
 
 
-cloud_warehouse_comparison_chart_df.drop(columns=['Shiprocket'], inplace=True)
+cloud_warehouse_comparison_chart_df
 
 
 # Cleaning of EXPENSE_IIGF.CSV
 # 
 
-# In[19]:
+# In[20]:
 
 
 print(expense_iigf_df.isnull().sum())
 
 
-# In[20]:
+# In[42]:
 
 
-# Handle missing values without using inplace=True
 expense_iigf_df['Recived Amount'] = expense_iigf_df['Recived Amount'].fillna('unknown')
 expense_iigf_df['Unnamed: 1'] = expense_iigf_df['Unnamed: 1'].fillna(0)
 expense_iigf_df['Expance'] = expense_iigf_df['Expance'].fillna('unknown')
 
 
-# In[21]:
+# In[41]:
 
 
-# Drop the first row containing headers (if needed)
-# expense_iigf_df.drop(0, inplace=True)
-
-# Handle missing values without using inplace=True
 expense_iigf_df['Recived Amount'] = expense_iigf_df['Recived Amount'].fillna('unknown')
 expense_iigf_df['Unnamed: 1'] = expense_iigf_df['Unnamed: 1'].fillna(0)
 expense_iigf_df['Expance'] = expense_iigf_df['Expance'].fillna('unknown')
 
-# Rename columns
+
 expense_iigf_df.rename(columns={
     'Recived Amount': 'Received_Amount',
     'Unnamed: 1': 'Received_Amount_Value',
@@ -209,11 +203,11 @@ expense_iigf_df.rename(columns={
     'Unnamed: 3': 'Expense_Value'
 }, inplace=True)
 
-# Remove duplicate rows
+
 expense_iigf_df.drop_duplicates(inplace=True)
 
 
-# In[22]:
+# In[23]:
 
 
 print(expense_iigf_df.isnull().sum())
@@ -221,13 +215,13 @@ print(expense_iigf_df.isnull().sum())
 
 # Data cleaning for the international_sale_report.csv
 
-# In[23]:
+# In[24]:
 
 
 print(international_sale_report_df.isnull().sum())
 
 
-# In[24]:
+# In[25]:
 
 
 # Handle missing values without using inplace=True
@@ -242,7 +236,7 @@ international_sale_report_df['RATE'] = international_sale_report_df['RATE'].fill
 international_sale_report_df['GROSS AMT'] = international_sale_report_df['GROSS AMT'].fillna(0)
 
 
-# In[25]:
+# In[26]:
 
 
 # Remove duplicate rows
@@ -265,7 +259,7 @@ international_sale_report_df['Month'] = international_sale_report_df['DATE'].dt.
 international_sale_report_df['Year'] = international_sale_report_df['DATE'].dt.year
 
 
-# In[26]:
+# In[27]:
 
 
 # Convert data types with specified format for DATE
@@ -277,13 +271,13 @@ international_sale_report_df['Month'] = international_sale_report_df['DATE'].dt.
 international_sale_report_df['Year'] = international_sale_report_df['DATE'].dt.year
 
 
-# In[27]:
+# In[28]:
 
 
 print(international_sale_report_df.isnull().sum())
 
 
-# In[28]:
+# In[29]:
 
 
 # Convert DATE column to datetime with more robust parsing
@@ -302,7 +296,7 @@ international_sale_report_df['RATE'] = international_sale_report_df['RATE'].fill
 international_sale_report_df['GROSS AMT'] = international_sale_report_df['GROSS AMT'].fillna(0)
 
 
-# In[29]:
+# In[30]:
 
 
 print(international_sale_report_df.isnull().sum())
@@ -310,7 +304,7 @@ print(international_sale_report_df.isnull().sum())
 
 # Data cleaning for the may_2022
 
-# In[30]:
+# In[31]:
 
 
 print(may_2022_df.isnull().sum())
@@ -318,7 +312,7 @@ print(may_2022_df.isnull().sum())
 
 # Data Cleaning for pl_march_2021.csv
 
-# In[31]:
+# In[32]:
 
 
 print(pl_march_2021_df.isnull().sum())
@@ -951,3 +945,9 @@ plt.show()
 # 
 # 
 #  Action Plan: Focus on inventory, marketing, and discounts before peak months to maximize revenue. 
+
+# In[ ]:
+
+
+
+

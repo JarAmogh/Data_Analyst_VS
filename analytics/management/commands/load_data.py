@@ -16,7 +16,7 @@ import random
 #     help = "Load all cleaned data from CSV files into MongoDB"
 
 #     def handle(self, *args, **kwargs):
-#         # ✅ Insert Data from amazon_sale_report.csv
+#         #  Insert Data from amazon_sale_report.csv
 #         self.stdout.write("Loading amazon_sale_report.csv...")
 #         amazon_sales_df = pd.read_csv('amazon_sale_report.csv', low_memory=False, dtype=str).fillna("Unknown")
         
@@ -53,7 +53,7 @@ import random
 #     help = "Load cloud_warehouse_comparison_chart.csv into MongoDB"
 
 #     def handle(self, *args, **kwargs):
-#         # ✅ Insert Data from cloud_warehouse_comparison_chart.csv
+#         #  Insert Data from cloud_warehouse_comparison_chart.csv
 #         self.stdout.write("Loading cloud_warehouse_comparison_chart.csv...")
 #         cloud_warehouse_df = pd.read_csv('cloud_warehouse_comparison_chart.csv', low_memory=False, dtype=str).fillna("Unknown")
         
@@ -78,7 +78,7 @@ import random
 #     help = "Load expense_iigf.csv into MongoDB"
 
 #     def handle(self, *args, **kwargs):
-#         # ✅ Insert Data from expense_iigf.csv
+#         # Insert Data from expense_iigf.csv
 #         self.stdout.write("Loading expense_iigf.csv...")
 #         expense_df = pd.read_csv('expense_iigf.csv', low_memory=False, dtype=str).fillna("Unknown")
         
@@ -125,7 +125,7 @@ import random
 #     help = "Load international_sale_report.csv into MongoDB"
 
 #     def handle(self, *args, **kwargs):
-#         # ✅ Insert Data from international_sale_report.csv
+#         #  Insert Data from international_sale_report.csv
 #         self.stdout.write("Loading international_sale_report.csv...")
 #         international_sale_df = pd.read_csv('international_sale_report.csv', low_memory=False, dtype=str).fillna("Unknown")
         
@@ -296,3 +296,5 @@ class Command(BaseCommand):
         SalesReport.objects.insert(sale_report_records)
         
         self.stdout.write(f"Processed {len(sale_report_records)} records for SalesReport.")
+
+        

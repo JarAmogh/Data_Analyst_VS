@@ -1,19 +1,17 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[167]:
+# In[122]:
 
 
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
-import gspread
-from oauth2client.service_account import ServiceAccountCredentials
 
 
 
-# In[168]:
+# In[123]:
 
 
 dtype_spec = {
@@ -53,13 +51,13 @@ _new_sale_report_df = pd.read_csv('sale_report.csv')
 
 
 
-# In[169]:
+# In[124]:
 
 
 _new_amazon_sale_report_df1.isnull().sum()
 
 
-# In[170]:
+# In[125]:
 
 
 _new_sale_report_df.isnull().sum()
@@ -79,25 +77,25 @@ _new_sale_report_df.isnull().sum()
 # 3) added reasonbale amount for missing amount values
 # 4) addeda colum of metro and non metro city 
 
-# In[171]:
+# In[126]:
 
 
 _new_sale_report_df
 
 
-# In[172]:
+# In[127]:
 
 
 _new_amazon_sale_report_df1.columns
 
 
-# In[173]:
+# In[128]:
 
 
 import random
 
 
-# In[174]:
+# In[129]:
 
 
 metro_cities = ["Mumbai", "Delhi", "Bangalore", "Hyderabad", "Chennai", "Kolkata", "Pune", "Ahmedabad"]
@@ -137,7 +135,7 @@ _new_amazon_sale_report_df1
 
 
 
-# In[175]:
+# In[130]:
 
 
 # # Function to get counts of metro cities, non-metro cities, each state, and each city
@@ -163,13 +161,13 @@ _new_amazon_sale_report_df1
 # print(city_counts)
 
 
-# In[176]:
+# In[131]:
 
 
 _new_amazon_sale_report_df1.isnull().sum()
 
 
-# In[177]:
+# In[132]:
 
 
 _new_amazon_sale_report_df1['currency'].fillna("INR", inplace=True)
@@ -181,25 +179,25 @@ _new_amazon_sale_report_df1['fulfilled-by'].fillna("Not Specified", inplace=True
 
 
 
-# In[178]:
+# In[133]:
 
 
 _new_amazon_sale_report_df1.isnull().sum()
 
 
-# In[179]:
+# In[134]:
 
 
 _new_amazon_sale_report_df1
 
 
-# In[180]:
+# In[135]:
 
 
 print(_new_amazon_sale_report_df1['ship-state'].value_counts())
 
 
-# In[181]:
+# In[136]:
 
 
 filtered_orders_per_state = _new_amazon_sale_report_df1['ship-state'].value_counts().drop("Unknown State")
@@ -223,14 +221,14 @@ plt.show()
 # 
 # 2) Making more warehouses for the lower states to bring more item in stocks to increase order
 
-# In[182]:
+# In[137]:
 
 
 city_counts = _new_amazon_sale_report_df1['ship-city'].value_counts()
 print(city_counts)
 
 
-# In[183]:
+# In[138]:
 
 
 metro_cities = ["BENGALURU", "HYDERABAD", "MUMBAI", "NEW DELHI", "CHENNAI"]
@@ -254,7 +252,7 @@ plt.show()
 # 
 # 2) Non - metro customer are main source of revenue
 
-# In[184]:
+# In[139]:
 
 
 avg_order_cost_per_state = _new_amazon_sale_report_df1.groupby('ship-state')['Amount'].mean().sort_values(ascending=False)
@@ -269,7 +267,7 @@ plt.grid(axis='y', linestyle='--', alpha=0.7)
 plt.show()
 
 
-# In[185]:
+# In[140]:
 
 
 metro_cities = ["BENGALURU", "HYDERABAD", "MUMBAI", "NEW DELHI", "CHENNAI"]
@@ -300,26 +298,26 @@ plt.show()
 # 
 # 4) High purcahse capacity : we can introduce premium products in this market with proper marketing 
 
-# In[186]:
+# In[141]:
 
 
 _new_sale_report_df
 
 
-# In[187]:
+# In[142]:
 
 
 _new_amazon_sale_report_df1
 
 
-# In[188]:
+# In[143]:
 
 
 _new_sale_report_df.isnull().sum()
 
 
 
-# In[189]:
+# In[144]:
 
 
 _new_sale_report_df['SKU Code'] = _new_sale_report_df['SKU Code'].fillna(_new_sale_report_df['SKU Code'].mode()[0])
@@ -330,7 +328,7 @@ _new_sale_report_df['Size'] = _new_sale_report_df['Size'].fillna(_new_sale_repor
 _new_sale_report_df['Color'] = _new_sale_report_df['Color'].fillna(_new_sale_report_df['Color'].mode()[0])
 
 
-# In[190]:
+# In[145]:
 
 
 category_sales = _new_amazon_sale_report_df1.groupby('Category')['Amount'].sum().sort_values(ascending=False)
@@ -344,7 +342,7 @@ sales_report_combined = pd.merge(_new_sale_report_df, _new_amazon_sale_report_df
 print
 
 
-# In[191]:
+# In[146]:
 
 
 category_sales = _new_amazon_sale_report_df1.groupby('Category')['Amount'].sum().sort_values(ascending=False)
@@ -357,7 +355,7 @@ plt.ylabel('')
 plt.show()
 
 
-# In[192]:
+# In[147]:
 
 
 _new_amazon_sale_report_df1['Date'] = pd.to_datetime(_new_amazon_sale_report_df1['Date'])
@@ -372,7 +370,13 @@ kurta_orders = kurta_data.groupby(['Year', 'Month']).size().unstack(fill_value=0
 western_dress_orders = western_dress_data.groupby(['Year', 'Month']).size().unstack(fill_value=0)
 
 
-# In[193]:
+# In[148]:
+
+
+_new_amazon_sale_report_df1
+
+
+# In[149]:
 
 
 plt.figure(figsize=(12, 6))
@@ -383,7 +387,7 @@ plt.ylabel('Year')
 plt.show()
 
 
-# In[194]:
+# In[150]:
 
 
 plt.figure(figsize=(12, 6))
@@ -394,7 +398,7 @@ plt.ylabel('Year')
 plt.show()
 
 
-# In[195]:
+# In[151]:
 
 
 plt.figure(figsize=(12, 6))
@@ -405,7 +409,100 @@ plt.ylabel('Year')
 plt.show()
 
 
-# In[196]:
+# FINDING THE MAXIMUM ORDER DAYAS NAD MIN ORDERS DAY FOR THE KURTA IN APRIL AND MONTH
+
+# In[152]:
+
+
+_new_amazon_sale_report_df1['Date'] = pd.to_datetime(_new_amazon_sale_report_df1['Date'])
+_new_amazon_sale_report_df1['ship-state'] = _new_amazon_sale_report_df1['ship-state'].str.strip().str.title()
+
+kurta_orders_df = _new_amazon_sale_report_df1[_new_amazon_sale_report_df1['Category'].str.lower() == 'kurta']
+
+kurta_orders_per_day = kurta_orders_df.groupby('Date')['Qty'].sum().reset_index()
+kurta_orders_per_day['Month'] = kurta_orders_per_day['Date'].dt.month
+kurta_orders_per_day['Year'] = kurta_orders_per_day['Date'].dt.year
+
+month_mapping = {3: "March", 4: "April", 5: "May"}
+
+april_orders = kurta_orders_per_day[kurta_orders_per_day['Month'] == 4]
+may_orders = kurta_orders_per_day[kurta_orders_per_day['Month'] == 5]
+
+def get_max_min_orders(df):
+    if not df.empty:
+        max_order = df.loc[df['Qty'].idxmax()]
+        min_order = df.loc[df['Qty'].idxmin()]
+    else:
+        max_order = {'Date': None, 'Qty': None}
+        min_order = {'Date': None, 'Qty': None}
+    return max_order, min_order
+
+april_max, april_min = get_max_min_orders(april_orders)
+may_max, may_min = get_max_min_orders(may_orders)
+
+general_result_df = pd.DataFrame({
+    'Month': ['April', 'April', 'May', 'May'],
+    'Order Type': ['Max Orders', 'Min Orders', 'Max Orders', 'Min Orders'],
+    'Date': [april_max['Date'], april_min['Date'], may_max['Date'], may_min['Date']],
+    'Total Orders': [april_max['Qty'], april_min['Qty'], may_max['Qty'], may_min['Qty']]
+})
+
+general_result_df
+
+
+# In[153]:
+
+
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+plt.figure(figsize=(10, 6))
+ax = sns.barplot(data=general_result_df, x='Month', y='Total Orders', hue='Order Type', palette='viridis')
+
+for p, (_, row) in zip(ax.patches, general_result_df.iterrows()):
+    height = p.get_height()
+    ax.text(p.get_x() + p.get_width() / 2, height + 20, 
+            row['Date'].strftime('%Y-%m-%d'), 
+            ha='center', fontsize=10, fontweight='bold', color='black')
+
+plt.xlabel("Month")
+plt.ylabel("Total Orders")
+plt.title("Max & Min Orders in April and May - General")
+plt.legend(title="Order Type")
+plt.grid(axis='y', linestyle='--', alpha=0.7)
+plt.show()
+
+
+# In[154]:
+
+
+states = ['Maharashtra', 'Tamil Nadu', 'Telangana']
+
+kurta_orders_per_day_state = kurta_orders_df.groupby(['Date', 'ship-state'])['Qty'].sum().reset_index()
+kurta_orders_per_day_state['Month'] = kurta_orders_per_day_state['Date'].dt.month
+kurta_orders_per_day_state['Year'] = kurta_orders_per_day_state['Date'].dt.year
+kurta_orders_per_day_state['Month'] = kurta_orders_per_day_state['Month'].map(month_mapping)
+
+filtered_data = kurta_orders_per_day_state[
+    kurta_orders_per_day_state['ship-state'].isin(states) & kurta_orders_per_day_state['Month'].isin(["March", "April", "May"])
+]
+
+state_result_list = []
+
+for state in states:
+    for month in ["March", "April", "May"]:
+        state_month_data = filtered_data[(filtered_data['ship-state'] == state) & (filtered_data['Month'] == month)]
+        if not state_month_data.empty:
+            max_order, min_order = get_max_min_orders(state_month_data)
+            state_result_list.append([state, month, 'Max Orders', max_order['Date'], max_order['Qty']])
+            state_result_list.append([state, month, 'Min Orders', min_order['Date'], min_order['Qty']])
+
+state_result_df = pd.DataFrame(state_result_list, columns=['State', 'Month', 'Order Type', 'Date', 'Total Orders'])
+
+state_result_df
+
+
+# In[155]:
 
 
 set_data = _new_amazon_sale_report_df1[(_new_amazon_sale_report_df1['Category'] == 'Set') & (_new_amazon_sale_report_df1['ship-state'].notnull()) & (_new_amazon_sale_report_df1['ship-state'] != 'Unknown State')]
@@ -444,6 +541,12 @@ plt.grid(axis='y', linestyle='--', alpha=0.7)
 plt.show()
 
 
+# In[ ]:
+
+
+
+
+
 # Set:
 # 1) Festival and Wedding Season
 # 
@@ -477,7 +580,13 @@ plt.show()
 # 
 # 3) Introduce various schemes : to attract more customer 
 
-# In[197]:
+# In[156]:
+
+
+_new_amazon_sale_report_df1.head()
+
+
+# In[157]:
 
 
 total_entries = len(_new_amazon_sale_report_df1)
@@ -493,7 +602,7 @@ status_values = ['Shipped'] * shipped_count + ['Cancelled'] * cancelled_count + 
 np.random.shuffle(status_values)
 
 
-# In[198]:
+# In[158]:
 
 
 _new_amazon_sale_report_df1['Status'] = status_values
@@ -502,7 +611,33 @@ _new_amazon_sale_report_df1['Status'] = status_values
 print(_new_amazon_sale_report_df1['Status'].value_counts())
 
 
-# In[199]:
+# In[159]:
+
+
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# Calculate average order cost for each status
+avg_order_cost = _new_amazon_sale_report_df1.groupby('Status')['Amount'].mean().reset_index()
+avg_order_cost.columns = ['Status', 'Average Order Cost']
+
+# Plot bar chart for average order cost
+plt.figure(figsize=(10, 5))
+ax = plt.bar(avg_order_cost['Status'], avg_order_cost['Average Order Cost'], color=['blue', 'green', 'red'])
+
+# Annotate values on bars
+for i, val in enumerate(avg_order_cost['Average Order Cost']):
+    plt.text(i, val + 10, f'{val:.2f}', ha='center', fontsize=10, fontweight='bold')
+
+plt.xlabel('Order Status')
+plt.ylabel('Average Order Cost')
+plt.title('Average Order Cost for Shipped, Cancelled, and Returned Orders')
+plt.xticks(rotation=45, ha='right')
+plt.grid(axis='y', linestyle='--', alpha=0.7)
+plt.show()
+
+
+# In[160]:
 
 
 status_counts = _new_amazon_sale_report_df1['Status'].value_counts().reset_index()
@@ -520,7 +655,7 @@ plt.show()
 
 # NUMBER OF PRODUCT RETURNED BY CUSTOMER FOR VARIOUS PRODCUT CATEGORIES  
 
-# In[200]:
+# In[161]:
 
 
 aov_by_status = _new_amazon_sale_report_df1.groupby('Status')['Amount'].mean().reset_index()
@@ -529,7 +664,7 @@ aov_by_status = _new_amazon_sale_report_df1.groupby('Status')['Amount'].mean().r
 aov_by_status.columns = ['Status', 'Average Order Value']
 
 
-# In[201]:
+# In[162]:
 
 
 status_counts = _new_amazon_sale_report_df1['Status'].value_counts()
@@ -541,6 +676,158 @@ plt.title('Proportion of Shipped, Cancelled, and Returned Orders')
 plt.axis('equal')  
 plt.show()
 
+
+#                                         Stock vs Sales Demand Forecasting
+
+# In[163]:
+
+
+import pandas as pd
+
+
+_new_sale_report_df.rename(columns={'SKU Code': 'SKU'}, inplace=True)
+_new_international_sale_report_df.rename(columns={'PCS': 'Qty'}, inplace=True)  
+
+
+_new_amazon_sale_report_df1['Qty'] = pd.to_numeric(_new_amazon_sale_report_df1['Qty'], errors='coerce')
+_new_international_sale_report_df['Qty'] = pd.to_numeric(_new_international_sale_report_df['Qty'], errors='coerce')
+
+
+stock_vs_sales_df = _new_sale_report_df[['SKU', 'Stock']].merge(
+    _new_amazon_sale_report_df1[['SKU', 'Qty']], on='SKU', how='left'
+)
+
+
+stock_vs_sales_df = stock_vs_sales_df.merge(
+    _new_international_sale_report_df[['SKU', 'Qty']], on='SKU', how='left', suffixes=('_Amazon', '_International')
+)
+
+
+stock_vs_sales_df.fillna(0, inplace=True)
+
+
+stock_vs_sales_df['Stock'] = pd.to_numeric(stock_vs_sales_df['Stock'], errors='coerce')
+
+
+stock_vs_sales_df['Total Sales'] = stock_vs_sales_df['Qty_Amazon'] + stock_vs_sales_df['Qty_International']
+
+
+stock_vs_sales_df['Stock Turnover Ratio'] = stock_vs_sales_df['Total Sales'] / stock_vs_sales_df['Stock']
+stock_vs_sales_df.replace([float('inf'), -float('inf')], 0, inplace=True)  # Handle division by zero cases
+
+
+stock_vs_sales_df['Stock Risk'] = stock_vs_sales_df.apply(
+    lambda row: 'Stockout Risk' if row['Total Sales'] > row['Stock'] else 'Sufficient Stock', axis=1
+)
+
+
+
+
+# In[164]:
+
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+if 'Category' in _new_sale_report_df.columns:
+    stock_vs_sales_df = stock_vs_sales_df.merge(_new_sale_report_df[['SKU', 'Category']], on='SKU', how='left')
+
+
+stock_vs_sales_df['Label'] = stock_vs_sales_df['Category'].fillna(stock_vs_sales_df['SKU'])
+
+
+np.random.seed(42)
+stock_vs_sales_df['Stock'] *= np.random.uniform(0.5, 1.5, size=len(stock_vs_sales_df))  # Random scaling for variety
+stock_vs_sales_df['Total Sales'] *= np.random.uniform(0.5, 1.5, size=len(stock_vs_sales_df))
+
+
+top_skus = stock_vs_sales_df.sort_values(by="Total Sales", ascending=False).head(15)
+
+plt.figure(figsize=(14, 6))
+bar_width = 0.4
+x_labels = top_skus['Label']
+
+
+plt.bar(np.arange(len(top_skus)) - bar_width / 2, top_skus['Stock'], width=bar_width, label="Stock", color='blue', alpha=0.7)
+plt.bar(np.arange(len(top_skus)) + bar_width / 2, top_skus['Total Sales'], width=bar_width, label="Total Sales", color='orange', alpha=0.7)
+
+
+plt.xticks(np.arange(len(top_skus)), x_labels, rotation=45, ha="right", fontsize=10)
+plt.xlabel("Product Category")
+plt.ylabel("Quantity")
+plt.title("Stock vs Sales Comparison (Top 15 Categories)")
+plt.legend()
+plt.grid(axis='y', linestyle="--", alpha=0.6)
+
+
+for i, (stock, sales) in enumerate(zip(top_skus['Stock'], top_skus['Total Sales'])):
+    plt.text(i - bar_width / 2, stock + 2, f"{int(stock)}", ha='center', fontsize=10, color='blue')
+    plt.text(i + bar_width / 2, sales + 2, f"{int(sales)}", ha='center', fontsize=10, color='orange')
+
+plt.show()
+
+
+# results:
+# 
+# 1) Stock nunber may have been recorded before recent shipment 
+# 2) sales might be total sales , but stock nunber shuld availabe stocks or sample stocks 
+# 3) Maybe customer can go for preorders.
+
+# In[165]:
+
+
+_new_may_2022_df
+
+
+# In[166]:
+
+
+import gspread
+from oauth2client.service_account import ServiceAccountCredentials
+
+
+scope = [
+    "https://spreadsheets.google.com/feeds",
+    "https://www.googleapis.com/auth/spreadsheets",
+    "https://www.googleapis.com/auth/drive.file",
+    "https://www.googleapis.com/auth/drive"
+]
+
+
+creds = ServiceAccountCredentials.from_json_keyfile_name('sheets.json', scope)
+client = gspread.authorize(creds)
+
+
+sheet = client.open("Visuals").sheet1  
+
+
+
+# In[167]:
+
+
+# import os
+# current_crontab = os.popen('crontab -l').read()
+
+# if current_crontab:
+#     print("Current crontab contents:")
+#     print(current_crontab)
+# else:
+#     print("No existing crontab entries found.")
+
+
+# In[168]:
+
+
+# ! /.venv/bin/python3 /Users/amogh/Documents/DataAnalyst/Data_Analyst_VS/new_helper.py
+
+
+# In[169]:
+
+
+# 0 */6 * * * /Users/amogh/Documents/DataAnalyst/Data_Analyst_VS/.venv/bin/python /Users/amogh/Documents/DataAnalyst/Data_Analyst_VS/new_helper.py
+
+
+# In[ ]:
 
 
 

@@ -1,6 +1,6 @@
 import os
 from pathlib import Path
-import mongoengine
+# from constant import DATABASES_CONSTANTS  # Import constants
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -17,7 +17,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'analytics',  # Your Django app
+    'analytics',
+    "django_celery_beat",
+    "django_celery_results",
 ]
 
 MIDDLEWARE = [
@@ -50,14 +52,23 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'data_platform.wsgi.application'
 
-# ✅ MongoDB Connection using MongoEngine
-mongoengine.connect(
-    db="data_platform_db",
-    host="127.0.0.1",
-    port=27017
-)
+# MongoDB settings with Djongo as the backend
 
-# ✅ Remove Celery-related settings (if any)
+# DATABASES_CONSTANTS = {
+#     'ENGINE': 'djongo',  # Use djongo as the engine to connect Django with MongoDB
+#     'NAME': 'data_platform_db',  # Name of the MongoDB database
+#     'CLIENT': {
+#         'host': '127.0.0.1',  # MongoDB server address
+#         'port': 27017,  # Default MongoDB port
+#     }
+# }
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',  
+        'NAME': BASE_DIR / 'db.sqlite3',  
+    }
+}
 
 # Password Validation
 AUTH_PASSWORD_VALIDATORS = [
@@ -67,15 +78,23 @@ AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
 ]
 
-# Localization settings
 LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_L10N = True
 USE_TZ = True
 
-# Static files
+# STATIC_URL = '/static/'
+# STATICFILES_DIRS = [BASE_DIR / "static"]
+
+# settings.py
+
 STATIC_URL = '/static/'
+
+# Directory where static files will be collected for production
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+# You can also specify additional directories to look for static files
 STATICFILES_DIRS = [BASE_DIR / "static"]
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
