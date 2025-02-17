@@ -1,6 +1,6 @@
 import os
 from pathlib import Path
-# from constant import DATABASES_CONSTANTS  # Import constants
+from celery.schedules import crontab
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -52,25 +52,13 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'data_platform.wsgi.application'
 
-# MongoDB settings with Djongo as the backend
-
-# DATABASES_CONSTANTS = {
-#     'ENGINE': 'djongo',  # Use djongo as the engine to connect Django with MongoDB
-#     'NAME': 'data_platform_db',  # Name of the MongoDB database
-#     'CLIENT': {
-#         'host': '127.0.0.1',  # MongoDB server address
-#         'port': 27017,  # Default MongoDB port
-#     }
-# }
-
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',  
-        'NAME': BASE_DIR / 'db.sqlite3',  
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 
-# Password Validation
 AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
     {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
@@ -84,17 +72,25 @@ USE_I18N = True
 USE_L10N = True
 USE_TZ = True
 
-# STATIC_URL = '/static/'
-# STATICFILES_DIRS = [BASE_DIR / "static"]
-
-# settings.py
-
 STATIC_URL = '/static/'
 
-# Directory where static files will be collected for production
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
-# You can also specify additional directories to look for static files
 STATICFILES_DIRS = [BASE_DIR / "static"]
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Celery Configuration
+CELERY_BROKER_URL = 'redis://localhost:6379/0'  # Redis as the message broker
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_BACKEND = "django-db"  # Backend to store task results
+CELERY_TIMEZONE = 'UTC'
+
+# Celery Beat configuration for periodic tasks
+CELERY_BEAT_SCHEDULE = {
+    'example-task': {
+        'task': 'analytics.tasks.example_task',  # Path to your task
+        'schedule': crontab(minute='*/5'),  # Runs every 5 minutes
+    },
+}
