@@ -9,7 +9,6 @@ SECRET_KEY = 'your-secret-key'
 DEBUG = True
 
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -80,17 +79,16 @@ STATICFILES_DIRS = [BASE_DIR / "static"]
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# Celery Configuration
-CELERY_BROKER_URL = 'redis://localhost:6379/0'  # Redis as the message broker
+CELERY_BROKER_URL = 'redis://localhost:6379/0'
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_TASK_SERIALIZER = 'json'
-CELERY_RESULT_BACKEND = "django-db"  # Backend to store task results
+CELERY_RESULT_BACKEND = "django-db"
 CELERY_TIMEZONE = 'UTC'
 
-# Celery Beat configuration for periodic tasks
 CELERY_BEAT_SCHEDULE = {
-    'example-task': {
-        'task': 'analytics.tasks.example_task',  # Path to your task
-        'schedule': crontab(minute='*/5'),  # Runs every 5 minutes
+    'load_clean_data_task': {
+        'task': 'analytics.tasks.load_clean_data_into_mongo',
+        'schedule': crontab(minute='*/1'),  # Runs every 1 minute
     },
 }
+

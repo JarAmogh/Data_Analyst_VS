@@ -1,0 +1,16 @@
+source .venv/bin/activate
+pip list | grep Django
+
+celery -A data_platform worker --loglevel=info
+
+celery -A data_platform beat --loglevel=info
+
+
+PYTHONPATH=$(pwd) python funcs/update_google_sheets.py
+
+ps aux | grep redis
+
+
+PYTHONPATH=$(pwd) celery -A data_platform worker --loglevel=info
+PYTHONPATH=$(pwd) celery -A data_platform beat --loglevel=info
+
